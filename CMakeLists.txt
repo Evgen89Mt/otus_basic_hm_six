@@ -7,13 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
-    src/new_vector.cpp
+    src/NewVector.cpp
 )
 
-target_include_directories(
-    PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-)
+# target_include_directories(
+#     PRIVATE
+#     ${CMAKE_SOURCE_DIR}/include
+# )
 
 message("!!! msg <CMAKE_SOURCE_DIR> ${CMAKE_SOURCE_DIR}")
 message("!!! msg <CMAKE_BINARY_DIR> ${CMAKE_BINARY_DIR}")

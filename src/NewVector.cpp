@@ -225,6 +225,42 @@ class NewVector{
         }
     }
 
+    void insert(size_t num, const T& value){
+        if(num > m_size){
+            return;
+        }
+        if(m_size == m_capacity){
+            reallocate(m_capacity ? m_capacity * 2 : 5);
+        }
+
+        //начинаем передвигать конец 
+        for(size_t i = m_size; num < i;){
+            --i;
+            m_data[i+1] = m_data[i]; 
+        }
+
+        new(&m_data[num]) T(value);
+        ++m_size;
+    }
+
+    void insert(size_t num, T&& value){
+        if(num > m_size){
+            return;
+        }
+        if(m_size == m_capacity){
+            reallocate(m_capacity ? m_capacity * 2 : 5);
+        }
+
+        //начинаем передвигать конец 
+        for(size_t i = m_size; num < i;){
+            --i;
+            m_data[i+1] = m_data[i]; 
+        }
+
+        new(&m_data[num]) T(static_cast<T&&>(value));
+        ++m_size;
+    }
+
     //==============итераторы=============
 
     T* begin(){

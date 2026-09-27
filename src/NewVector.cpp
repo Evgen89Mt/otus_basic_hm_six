@@ -233,14 +233,23 @@ class NewVector{
             reallocate(m_capacity ? m_capacity * 2 : 5);
         }
 
-        //начинаем передвигать конец 
-        for(size_t i = m_size; num < i;){
-            --i;
-            m_data[i+1] = m_data[i]; 
+        if(num == m_size){
+            new(&m_data[m_size])T(value);
+            m_size++;
+            return;
         }
 
-        new(&m_data[num]) T(value);
+        new(&m_data[m_size])T(m_data[m_size - 1]);
+
+        for(size_t i = m_size; num < i;){
+            --i;
+            m_data[i + 1] = m_data[i];
+        }
+
+        m_data[num] = value;
+
         ++m_size;
+
     }
 
     void insert(size_t num, T&& value){
@@ -251,14 +260,70 @@ class NewVector{
             reallocate(m_capacity ? m_capacity * 2 : 5);
         }
 
-        //начинаем передвигать конец 
-        for(size_t i = m_size; num < i;){
-            --i;
-            m_data[i+1] = m_data[i]; 
+        if(m_size == num){
+            new(&m_data[m_size])T(static_cast<T&&>(value));
+            ++m_size;
+            return;
         }
 
-        new(&m_data[num]) T(static_cast<T&&>(value));
-        ++m_size;
+        new(&m_data[m_size]) T(static_cast<T&&>(m_data[m_size - 1]));
+
+        for(size_t i = m_size; i < num ;){
+            --i;
+            m_data[i + 1] = static_cast<T&&>(m_data[i]);
+        }
+
+        m_data[num] = static_cast<T&&>(value);
+    }
+
+    // void erase(const size_t num){
+    //     if(num >= m_size){
+    //         return;
+    //     }
+    //
+    //     for(size_t i = num; i < m_size - 1; ++i){
+    //         m_data[i] = m_data[i + 1];
+    //     }
+    //     m_data[m_size - 1].~T();
+    //     --m_size;
+    // }
+
+    void erase(const size_t num){
+        if(num >= m_size){
+            return;
+        }
+
+        for(size_t i = num; i < m_size - 1; ++i){
+            m_data[i] = static_cast<T&&>(m_data[i + 1]);
+        }
+        m_data[m_size - 1].~T();
+        --m_size;
+    }
+
+    // void swap(const size_t i, const size_t j){
+    //     if(i >= m_size && j >= m_size){
+    //         return;
+    //     }
+    //     if(i == j){
+    //         return;
+    //     }
+    //     T temp = m_data[i];
+    //     m_data[i] = m_data[j];
+    //     m_data[j] = temp;
+    // }
+
+    void swap(const size_t i, const size_t j){
+        if(i >= m_size && j >= m_size){
+            return;
+        }
+
+        if(i == j){
+            return;
+        }
+
+        T temp = static_cast<T&&>(m_data[i]);
+        m_data[i] = static_cast<T&&>(m_data[j]);
+        m_data[j] = static_cast<T&&>(temp);
     }
 
     //==============итераторы=============
@@ -268,6 +333,14 @@ class NewVector{
     }
 
     T* end(){
+        return (m_data ? m_data + m_size : nullptr);
+    }
+
+    const T* begin() const {
+        return m_data;
+    }
+
+    const T* end() const {
         return (m_data ? m_data + m_size : nullptr);
     }
 

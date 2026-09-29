@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "NewVector.cpp"
+#include "NewVector.h"
 
 template<typename T>
 std::ostream& operator << (std::ostream& os, const NewVector<T>& vec){

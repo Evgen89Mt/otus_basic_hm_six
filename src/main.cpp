@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "NewVector.h"
+#include "DoubleList.h"
 
 template<typename T>
 std::ostream& operator << (std::ostream& os, const NewVector<T>& vec){
@@ -55,6 +56,20 @@ int main(int argc, char* argv[]){
     std::cout << "view container capacite update\n"<< vec << std::endl;
     std::cout << "size = "<< vec.size() << "; " 
     << "capacity = " << vec.capacity() << std::endl;
+
+    std::cout << "DoubleList push_back" << std::endl;
+    DoubleList<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+
+    std::cout << "view list : ";
+    for(size_t i = 0; i < list.size(); i++){
+        std::cout << list.at(i) << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }

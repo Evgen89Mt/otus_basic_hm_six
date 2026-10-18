@@ -8,6 +8,8 @@
 #include<cstddef>
 #include<new>
 
+#include "VecIterator.h"
+
 template<typename T>
 class NewVector{
     private:
@@ -74,16 +76,15 @@ class NewVector{
         void erase(const size_t num);
         void swap(const size_t i, const size_t j);
 
-        //==============итераторы=============
+        //============VecIterator=============
+        VecIterator<T,T> begin();
+        VecIterator<T,T> end();
 
-        T* begin();
-        T* end();
+        VecIterator<T,const T> begin() const;
+        VecIterator<T,const T> end() const;
 
-        const T* begin() const;
-        const T* end() const;
-
-        const T* cbegin() const;
-        const T* cend() const;
+        VecIterator<T,const T> cbegin() const;
+        VecIterator<T,const T> cend() const;
 };
 
 

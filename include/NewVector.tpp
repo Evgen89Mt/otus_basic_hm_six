@@ -313,32 +313,62 @@ void NewVector<T>::swap(const size_t i, const size_t j){
     m_data[j] = static_cast<T&&>(temp);
 }
 
+// template<typename T>
+// T* NewVector<T>::begin(){
+//     return m_data;
+// }
+
+// template<typename T>
+// T* NewVector<T>::end(){
+//     return (m_data ? m_data + m_size : nullptr);
+// }
+
+// template<typename T>
+// const T* NewVector<T>::begin() const {
+//     return m_data;
+// }
+
+// template<typename T>
+// const T* NewVector<T>::end() const {
+//     return (m_data ? m_data + m_size : nullptr);
+// }
+
+// template<typename T>
+// const T* NewVector<T>::cbegin() const {
+//     return m_data; 
+// }
+
+// template<typename T>
+// const T* NewVector<T>::cend() const {
+//     return (m_data ? m_data + m_size : nullptr);
+// }
+
 template<typename T>
-T* NewVector<T>::begin(){
-    return m_data;
+VecIterator<T, T> NewVector<T>::begin() {
+    return VecIterator<T, T>(m_data);
 }
 
 template<typename T>
-T* NewVector<T>::end(){
-    return (m_data ? m_data + m_size : nullptr);
+VecIterator<T,T> NewVector<T>::end(){
+    return VecIterator<T, T>(m_data + m_size);
 }
 
 template<typename T>
-const T* NewVector<T>::begin() const {
-    return m_data;
+VecIterator<T,const T> NewVector<T>::begin() const{
+    return VecIterator<T, const T>(m_data);
 }
 
 template<typename T>
-const T* NewVector<T>::end() const {
-    return (m_data ? m_data + m_size : nullptr);
+VecIterator<T,const T> NewVector<T>::end() const{
+    return VecIterator<T, const T>(m_data + m_size);
 }
 
 template<typename T>
-const T* NewVector<T>::cbegin() const {
-    return m_data; 
+VecIterator<T,const T> NewVector<T>::cbegin() const{
+    return VecIterator<T, const T>(m_data);
 }
 
 template<typename T>
-const T* NewVector<T>::cend() const {
-    return (m_data ? m_data + m_size : nullptr);
+VecIterator<T,const T> NewVector<T>::cend() const{
+    return VecIterator<T, const T>(m_data + m_size);
 }

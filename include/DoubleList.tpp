@@ -264,3 +264,32 @@ void DoubleList<T>::swap(size_t i, size_t j){
     b->value = static_cast<T&&>(tmp);
 }
 
+template<typename T>
+DoubleListIterator<T,T> DoubleList<T>::begin(){
+    return DoubleListIterator<T,T>(m_head);
+}
+
+template<typename T>
+DoubleListIterator<T,T> DoubleList<T>::end(){
+    return DoubleListIterator<T,T>(nullptr);
+}
+
+template<typename T>
+DoubleListIterator<T, const T> DoubleList<T>::begin() const{
+    return DoubleListIterator<T,T>(m_head);
+}
+
+template<typename T>
+DoubleListIterator<T, const T> DoubleList<T>::end() const{
+    return DoubleListIterator<T,T>(nullptr);
+}
+
+template<typename T>
+DoubleListIterator<T, const T> DoubleList<T>::cbegin() const{
+    return DoubleListIterator<T,T>(m_head);
+}
+
+template<typename T>
+DoubleListIterator<T, const T> DoubleList<T>::cend() const{
+    return DoubleListIterator(nullptr);
+}

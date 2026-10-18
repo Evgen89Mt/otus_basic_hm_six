@@ -79,6 +79,15 @@ int main(int argc, char* argv[]){
     << "capacity = " << vec.capacity() << std::endl;
 
     std::cout << "------------------------------------------------------" << std::endl;
+    std::cout << "view container new vector iterator" <<std::endl;
+    for(VecIterator<int,int> it = vec.begin(); it != vec.end(); ++it){
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "end - begin = " << (vec.end() - vec.begin()) << std::endl;
+
+    std::cout << "------------------------------------------------------" << std::endl;
     std::cout << "DoubleList push_back" << std::endl;
     DoubleList<int> list;
     list.push_back(1);
@@ -121,14 +130,22 @@ int main(int argc, char* argv[]){
     list.swap(0, list.size() - 1);
     print(list);
 
+
+    std::cout << "------------------------------------------------------" << std::endl;
+    std::cout << "view conatainer double list iterator";
+    for(DoubleListIterator<int,int> it = list.begin(); it != list.end(); ++it){
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+
     std::cout << "after clear: ";
     list.clear();
     print(list);
     std::cout << "size = " << list.size()
               << ", empty = " << (list.empty() ? "yes" : "no") << "\n";
 
-
-     std::cout << "------------------------------------------------------" << std::endl;
+    std::cout << "------------------------------------------------------" << std::endl;
     std::cout << "SingleList push_back" << std::endl;
     SingleList<int> slist;
     slist.push_back(1);
@@ -176,6 +193,7 @@ int main(int argc, char* argv[]){
     print(slist);
     std::cout << "size = " << slist.size()
               << ", empty = " << (slist.empty() ? "yes" : "no") << "\n";
+    
 
     return 0;
 }

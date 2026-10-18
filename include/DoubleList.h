@@ -4,6 +4,7 @@
 
 #include<cstddef>
 #include"DNode.h"
+#include "DoubleListIterator.h"
 
 template<typename T>
 class DoubleList{
@@ -47,6 +48,15 @@ class DoubleList{
         void remove(size_t index);
         void swap(size_t i, size_t j);
 
+        //=========iterator==========
+        DoubleListIterator<T,T> begin();
+        DoubleListIterator<T,T> end();
+
+        DoubleListIterator<T, const T> begin() const;
+        DoubleListIterator<T, const T> end() const;
+
+        DoubleListIterator<T, const T> cbegin() const;
+        DoubleListIterator<T, const T> cend() const;
 };
 
 

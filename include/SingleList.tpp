@@ -168,18 +168,18 @@ void SingleList<T>::insert(size_t index, const T& value){
 template<typename T>
 void SingleList<T>::insert(size_t index, T&& value){
     if (index == 0) {
-        push_front(static_cast<T&&>(value));
+        push_front(std::move(value));
         return;
     }
     if (index >= m_size) {
-        push_back(static_cast<T&&>(value));
+        push_back(std::move(value));
         return;
     }
 
     Node<T>* left  = node_at(index - 1);
     Node<T>* right = left->next;
 
-    Node<T>* node = new Node<T>(static_cast<T&&>(value));
+    Node<T>* node = new Node<T>(std::move(value));
     node->next = right;
     left->next = node;
 
@@ -223,7 +223,7 @@ void SingleList<T>::swap(size_t i, size_t j){
     Node<T>* a = node_at(i);
     Node<T>* b = node_at(j);
 
-    T tmp = static_cast<T&&>(a->value);
-    a->value = static_cast<T&&>(b->value);
-    b->value = static_cast<T&&>(tmp);
+    T tmp = std::move(a->value);
+    a->value = std::move(b->value);
+    b->value = std::move(tmp);
 }

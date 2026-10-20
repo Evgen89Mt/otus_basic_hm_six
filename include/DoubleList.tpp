@@ -38,7 +38,7 @@ void DoubleList<T>::push_front(const T& v){
 
 template<typename T>
 void DoubleList<T>::push_front(T&& v){
-    DNode<T>* node = new DNode<T>(static_cast<T&&>(v));
+    DNode<T>* node = new DNode<T>(std::move(v));
 
     node->next = m_head;
 
@@ -70,7 +70,7 @@ void DoubleList<T>::push_back(const T& v){
 
 template<typename T>
 void DoubleList<T>::push_back(T&& v){
-    DNode<T>* node = new DNode<T>(static_cast<T&&>(v));
+    DNode<T>* node = new DNode<T>(std::move(v));
 
     node->prev = m_tail;
 
@@ -201,18 +201,18 @@ void DoubleList<T>::insert(size_t index, const T& value){
 template<typename T>
 void DoubleList<T>::insert(size_t index, T&& value){
         if (index == 0) {
-        push_front(static_cast<T&&>(value));
+        push_front(std::move(value));
         return;
     }
     if (index >= m_size) {
-        push_back(static_cast<T&&>(value));
+        push_back(std::move(value));
         return;
     }
 
     DNode<T>* rigth = node_at(index);
     DNode<T>* left = rigth->prev;
 
-    DNode<T>* node = new DNode<T>(static_cast<T&&>(value));
+    DNode<T>* node = new DNode<T>(std::move(value));
     node->prev = left;
     node->next = rigth;
 
@@ -258,10 +258,10 @@ void DoubleList<T>::swap(size_t i, size_t j){
     DNode<T>* a = node_at(i);
     DNode<T>* b = node_at(j);
 
-    T tmp = static_cast<T&&>(a->value);
+    T tmp = std::move(a->value);
 
-    a->value = static_cast<T&&>(b->value);
-    b->value = static_cast<T&&>(tmp);
+    a->value = std::move(b->value);
+    b->value = std::move(tmp);
 }
 
 template<typename T>

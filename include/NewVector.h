@@ -8,6 +8,8 @@
 #include<cstddef>
 #include<new>
 
+#include <utility>      //std::move
+
 #include "VecIterator.h"
 
 template<typename T>

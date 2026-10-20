@@ -1,8 +1,9 @@
-// Двусвязанный список, построение на Node, next в сторону хвоста, prev в сторону головы
+// Двусвязанный список, построение на Node, next в сторону хвоста, prev в сторону г>оловы
 
 #pragma once
 
 #include<cstddef>
+#include <utility>      //std::move
 #include"DNode.h"
 #include "DoubleListIterator.h"
 

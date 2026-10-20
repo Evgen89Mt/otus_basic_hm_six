@@ -25,9 +25,8 @@ void NewVector<T>::reallocate(size_t capacity){
 
     T* newData = allocate(capacity);
 
-    for(size_t i = 0; i < m_size; ++i){
-        new(&newData[i]) T(m_data[i]);  
-        m_data[i].~T();                 
+    for(size_t i = 0; i < m_size; ++i){ 
+        new(&newData[i]) T(std::move(m_data[i]));            
     }
 
     deallocate(m_data);
@@ -208,7 +207,7 @@ void NewVector<T>::push_back(T&& value){
         reallocate(m_capacity ? m_capacity * 2 : 5);
     }
 
-    new(&m_data[m_size]) T(static_cast<T&&>(value));
+    new(&m_data[m_size]) T(std::move(value));
     ++m_size;
 }
 
@@ -258,6 +257,7 @@ void NewVector<T>::insert(size_t num, const T& value){
 
 }
 
+
 template<typename T>
 void NewVector<T>::insert(size_t num, T&& value){
     if(num > m_size){
@@ -268,19 +268,19 @@ void NewVector<T>::insert(size_t num, T&& value){
     }
 
     if(m_size == num){
-        new(&m_data[m_size])T(static_cast<T&&>(value));
+        new(&m_data[m_size])T(std::move(value));
         ++m_size;
         return;
     }
 
-    new(&m_data[m_size]) T(static_cast<T&&>(m_data[m_size - 1]));
+    new(&m_data[m_size]) T(std::move(m_data[m_size - 1]));
 
     for(size_t i = m_size; i < num ;){
         --i;
-        m_data[i + 1] = static_cast<T&&>(m_data[i]);
+        m_data[i + 1] = std::move(m_data[i]);
     }
 
-    m_data[num] = static_cast<T&&>(value);
+    m_data[num] = std::move(value);
 }
 
 
@@ -291,7 +291,7 @@ void NewVector<T>::erase(const size_t num){
     }
 
     for(size_t i = num; i < m_size - 1; ++i){
-        m_data[i] = static_cast<T&&>(m_data[i + 1]);
+        m_data[i] = std::move(m_data[i + 1]);
     }
     m_data[m_size - 1].~T();
     --m_size;
@@ -308,40 +308,10 @@ void NewVector<T>::swap(const size_t i, const size_t j){
         return;
     }
 
-    T temp = static_cast<T&&>(m_data[i]);
-    m_data[i] = static_cast<T&&>(m_data[j]);
-    m_data[j] = static_cast<T&&>(temp);
+    T temp = std::move(m_data[i]);
+    m_data[i] = std::move(m_data[j]);
+    m_data[j] = std::move(temp);
 }
-
-// template<typename T>
-// T* NewVector<T>::begin(){
-//     return m_data;
-// }
-
-// template<typename T>
-// T* NewVector<T>::end(){
-//     return (m_data ? m_data + m_size : nullptr);
-// }
-
-// template<typename T>
-// const T* NewVector<T>::begin() const {
-//     return m_data;
-// }
-
-// template<typename T>
-// const T* NewVector<T>::end() const {
-//     return (m_data ? m_data + m_size : nullptr);
-// }
-
-// template<typename T>
-// const T* NewVector<T>::cbegin() const {
-//     return m_data; 
-// }
-
-// template<typename T>
-// const T* NewVector<T>::cend() const {
-//     return (m_data ? m_data + m_size : nullptr);
-// }
 
 template<typename T>
 VecIterator<T, T> NewVector<T>::begin() {

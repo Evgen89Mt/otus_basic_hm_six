@@ -26,7 +26,8 @@ void NewVector<T>::reallocate(size_t capacity){
     T* newData = allocate(capacity);
 
     for(size_t i = 0; i < m_size; ++i){ 
-        new(&newData[i]) T(std::move(m_data[i]));            
+        new(&newData[i]) T(std::move(m_data[i]));
+        m_data[i].~T();            
     }
 
     deallocate(m_data);
